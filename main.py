@@ -159,3 +159,22 @@ ax.set_xticks(x)
 ax.set_xticklabels(classifiers)
 ax.legend()
 plt.show()
+
+def classify_user_review(classifier, vectorizer):
+    """
+    Takes user input for a movie review and classifies it as positive or negative.
+    :param classifier: The trained classifier (e.g., logistic_classifier).
+    :param vectorizer: The trained vectorizer (e.g., vectorizer_tf or vectorizer_tfidf).
+    """
+    # Taking user input
+    user_input = input("Enter your movie review: ")
+    # Preprocess the input (ensure this uses the same preprocessing as your training data)
+    preprocessed_review = " ".join(preprocess(user_input))
+    # Transform the review using the trained vectorizer
+    vectorized_review = vectorizer.transform([preprocessed_review])
+    # Predict the sentiment
+    prediction = classifier.predict(vectorized_review)
+    sentiment = 'Positive' if prediction[0] == 'pos' else 'Negative'
+    print(f"The review is predicted to be: {sentiment}")
+
+classify_user_review(logistic_classifier, vectorizer_tf)
